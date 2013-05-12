@@ -254,7 +254,7 @@ table {
 .button {
   display: inline-block;
   padding: 0.3em 0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
   text-decoration: none;
   background-color: #ebebeb; }
   .button:hover {
@@ -306,6 +306,11 @@ textarea {
 /*------------------------------------*\
     $Layout
 \*------------------------------------*/
+.section {
+  float: left;
+  width: 100%;
+  padding: 1em; }
+
 .full {
   float: left;
   width: 100%; }
@@ -354,10 +359,42 @@ textarea {
   width: 20%; }
 
 /*------------------------------------*\
+    $Slideshow
+\*------------------------------------*/
+.slideshow {
+  position: relative;
+  width: 100%;
+  overflow: hidden; }
+
+.slideshow__panels {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.slideshow__panel {
+  float: left;
+  width: 100%; }
+
+/* Controls */
+.slideshow__control {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  text-indent: -9999px;
+  background-color: yellow; }
+
+.slideshow__control--previous {
+  left: 0; }
+
+.slideshow__control--next {
+  right: 0; }
+
+/*------------------------------------*\
     $Site Header
 \*------------------------------------*/
 .header {
-  padding: 1em;
   background-color: #e1e1e1; }
 
 /* $Logo */
@@ -399,7 +436,6 @@ textarea {
     $Showcase
 \*------------------------------------*/
 .showcase {
-  padding: 1em;
   background-color: #c5c5c5; }
 
 .showcase__title {
@@ -421,7 +457,6 @@ textarea {
     $Page Title
 \*------------------------------------*/
 .page__header {
-  padding: 1em;
   padding-bottom: 0;
   background-color: #a0a0a0; }
 
@@ -465,3 +500,22 @@ textarea {
   @media (max-width: 615px) {
     .ad {
       display: none; } }
+
+/*------------------------------------*\
+    $Team
+\*------------------------------------*/
+.team {
+  background-color: #7d7d7d; }
+
+.players {
+  width: 100%;
+  overflow: hidden; }
+
+.player {
+  height: 250px;
+  text-align: center; }
+  @media (max-width: 615px) {
+    .player {
+      display: none; }
+      .player:first-of-type {
+        display: block; } }
