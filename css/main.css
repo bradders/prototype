@@ -306,6 +306,10 @@ textarea {
 /*------------------------------------*\
     $Layout
 \*------------------------------------*/
+.container {
+  margin: 0 auto;
+  max-width: 1000px; }
+
 .section {
   float: left;
   width: 100%;
@@ -363,8 +367,13 @@ textarea {
 \*------------------------------------*/
 .slideshow {
   position: relative;
-  width: 100%;
-  overflow: hidden; }
+  overflow: hidden;
+  *zoom: 1; }
+  .slideshow:before, .slideshow:after {
+    display: table;
+    content: ""; }
+  .slideshow:after {
+    clear: both; }
 
 .slideshow__panels {
   position: absolute;
@@ -379,7 +388,7 @@ textarea {
 .slideshow__control {
   display: block;
   position: absolute;
-  top: 50%;
+  top: 40%;
   width: 30px;
   height: 30px;
   text-indent: -9999px;
@@ -392,16 +401,48 @@ textarea {
   right: 0; }
 
 /*------------------------------------*\
+    $Tabs
+\*------------------------------------*/
+.tab__nav > ul {
+  margin-bottom: 0; }
+
+.tab__link {
+  padding: 0.5em;
+  border: 2px solid transparent;
+  border-bottom: 0; }
+
+.tab__link--active {
+  border: 2px solid #333333;
+  border-bottom: 0;
+  background-color: #c2c2c2; }
+
+.tab__section {
+  margin-top: -2px;
+  padding: 1em;
+  border: 2px solid #333333;
+  background-color: #c2c2c2;
+  *zoom: 1; }
+  .tab__section:before, .tab__section:after {
+    display: table;
+    content: ""; }
+  .tab__section:after {
+    clear: both; }
+  @media (max-width: 615px) {
+    .tab__section {
+      margin-bottom: 1em; } }
+
+/*------------------------------------*\
     $Site Header
 \*------------------------------------*/
 .header {
+  position: relative;
   background-color: #e1e1e1; }
 
 /* $Logo */
 .header__logo {
   float: left;
   margin-right: 1em; }
-  .header__logo > img {
+  .header__logo img {
     display: block; }
 
 .header__name {
@@ -412,7 +453,11 @@ textarea {
   float: left; }
   @media (max-width: 615px) {
     .header__nav {
-      display: none; } }
+      display: none;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0; } }
 
 .header__link {
   display: inline-block;
@@ -420,6 +465,9 @@ textarea {
   color: #fff;
   text-decoration: none;
   background-color: #333; }
+  @media (max-width: 615px) {
+    .header__link {
+      width: 100%; } }
 
 .toggle-menu {
   display: none; }
@@ -447,10 +495,10 @@ textarea {
 /*------------------------------------*\
     $Pods
 \*------------------------------------*/
-.pods {
+.tiles {
   background-color: #acacac; }
 
-.pod {
+.tile {
   padding: 1em; }
 
 /*------------------------------------*\
@@ -476,8 +524,6 @@ textarea {
     $VS
 \*------------------------------------*/
 .vs {
-  padding-top: 1em;
-  padding-bottom: 1em;
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: 50% 40%;
@@ -486,6 +532,29 @@ textarea {
 .club {
   width: 50%;
   text-align: center; }
+
+/*------------------------------------*\
+    $Fixtures
+\*------------------------------------*/
+.fixture {
+  margin-bottom: 0.5em;
+  *zoom: 1; }
+  .fixture dt {
+    width: 30%;
+    float: left;
+    clear: left;
+    font-size: 1.1em;
+    font-weight: bold; }
+  .fixture dd {
+    float: left;
+    width: 70%;
+    padding-left: 0.5em;
+    font-size: 0.8em; }
+  .fixture:before, .fixture:after {
+    display: table;
+    content: ""; }
+  .fixture:after {
+    clear: both; }
 
 /*------------------------------------*\
     $Ad
@@ -506,10 +575,6 @@ textarea {
 \*------------------------------------*/
 .team {
   background-color: #7d7d7d; }
-
-.players {
-  width: 100%;
-  overflow: hidden; }
 
 .player {
   height: 250px;

@@ -6,12 +6,36 @@ var UI = {
 
 	init: function() {
 
+        /**
+        * Collate browser details
+        */
+        $(window).on("resize", function() {
+            
+            UI.site.width = document.documentElement.clientWidth;
+            UI.getSiteMode();
+
+            if(UI.site.mode == "small") {
+            	UI.tabs.unload();
+            } else {
+            	UI.tabs.init();
+            }
+
+        });
+        UI.getSiteMode();
+
+        /**
+        * Click functionality to deal with small screen nav
+        */
 		$(".js-toggle-menu").bind("click", function(e) {
 			$(".js-header__nav").toggleClass("content--show");
 			e.stop();
 		});
 
+        /**
+        * Initialize any slideshows and/or tabs
+        */
 		UI.slideshow.init();
+		UI.tabs.init();
 
 	}, 
 
@@ -25,9 +49,9 @@ var UI = {
                 var slideshow = $(slideshows[i]), 
                     panels_container = slideshow.find(".slideshow__panels"), 
                     content = slideshow.find(".slideshow__panel"),
-                    window_width = document.documentElement.clientWidth, 
+                    window_width = slideshow.width(), 
                     slideshow_width = window_width * content.length;
-                
+
                 slideshow.height(content.height());
                 slideshow.find(".slideshow__panel").width(window_width);
             
@@ -52,12 +76,14 @@ var UI = {
                 var slideshow = $(slideshows[i]), 
                     panels_container = slideshow.find(".slideshow__panels"), 
                     content = slideshow.find(".slideshow__panel"),
-                    window_width = document.documentElement.clientWidth, 
+                    window_width = slideshow.width(), 
                     slideshow_width = window_width * content.length;
                 
                 slideshow.find(".slideshow__panel").width(window_width);
                 slideshow.height(content.height());
-                panels_container.width(slideshow_width);
+                panels_container.width(slideshow_width).css({ left: 0 });
+                content.removeAttr("data-current");
+                $(content[0]).attr("data-current", "true");
             
             }
         }, 
@@ -107,7 +133,7 @@ var UI = {
             
             if(!$(link).hasClass("slideshow__control--disabled")) {
                 
-                var window_width = document.documentElement.clientWidth, 
+                var window_width = slideshow.width(), 
                     current_position = parseInt(slideshow.find(".slideshow__panels").css("left")), 
                     new_position = 0, 
                     current_panel = UI.slideshow.currentPanel(slideshow), 
@@ -155,5 +181,84 @@ var UI = {
         }
         
     },
+
+	tabs: {
+		
+		init: function() {
+			
+			$(".tabs").each(function() {
+				
+				var div = $(this), 
+						nav = div.find(".tab__nav"), 
+						links = nav.find(".tab__link"), 
+						sections = div.find(".tab__section"), 
+						defaultTab = div.attr("data-default"), 
+						defaultSection = div.find("section[data-tab='" + div.attr("data-default") + "']");
+						
+				if(defaultSection.length == 0) defaultSection = sections.first();
+				
+				if(defaultTab != undefined && defaultSection.length > 0) {
+					sections.hide();
+					defaultTab = div.attr("data-default");
+					div.find("a[data-tab='" + defaultTab + "']").addClass("tab__link--active");
+					div.find("section[data-tab='" + defaultTab + "']").show();
+				} else {
+					links.first().addClass("tab__link--active");
+					sections.hide();
+					sections.first().show();
+				}
+				
+				nav.show();
+				links.bind("click", function(e) {
+					var link = $(this), 
+						tabName = link.attr("data-tab");
+					
+					links.removeClass("tab__link--active");
+					link.addClass("tab__link--active");
+					
+					sections.hide();
+					div.find("section[data-tab='" + tabName + "']").show();
+					
+					e.stop();
+				});
+				
+			});
+			
+		}, 
+		
+		unload: function() {
+			
+			$(".tabs").each(function() {
+				
+				var div = $(this);
+				
+				div.find(".tab__nav").hide();
+				div.find(".tab__link").removeClass("tab__link--active");
+				div.find(".tab__section").show();
+				
+			});
+			
+		}
+		
+	}, 
+
+	"site": {
+		"width": document.documentElement.clientWidth, 
+		"breakpoints": [
+			{ "name": "medium", "min": 615 }, 
+			{ "name": "small", "min": 0 }
+		], 
+		"mode": {}
+	}, 
+
+    getSiteMode: function() {
+        for(var i=0, len=UI.site.breakpoints.length; i<len; i++) {
+            var breakpoint = UI.site.breakpoints[i];
+            if(document.documentElement.clientWidth > breakpoint.min) {
+                UI.site.mode = breakpoint.name;
+                break;
+            }
+        }
+    }
 
 };

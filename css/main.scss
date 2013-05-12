@@ -44,6 +44,19 @@
     }
 }
 
+@mixin clearfix {
+    *zoom : 1;
+    
+    &:before, &:after {
+        display: table;
+        content : "";
+    }
+    
+    &:after {
+        clear: both;
+    }
+
+}
 
 
 
@@ -421,7 +434,8 @@ textarea {
     $Layout
 \*------------------------------------*/
 .container {
-
+    margin: 0 auto;
+    max-width: 1000px;
 }
 
 .section {
@@ -504,8 +518,10 @@ textarea {
 \*------------------------------------*/
 .slideshow {
     position: relative;
-    width: 100%;
     overflow: hidden;
+
+    @include clearfix;
+
 }
 
 .slideshow__panels {
@@ -523,7 +539,7 @@ textarea {
 .slideshow__control {
     display: block;
     position: absolute;
-    top: 50%;
+    top: 40%;
     width: 30px;
     height: 30px;
     text-indent: -9999px;
@@ -540,10 +556,49 @@ textarea {
 
 
 
+
+
+/*------------------------------------*\
+    $Tabs
+\*------------------------------------*/
+.tab__nav > ul {
+    margin-bottom: 0;
+}
+
+.tab__link {
+    padding: 0.5em;
+    border: 2px solid transparent;
+    border-bottom: 0;
+}
+
+    .tab__link--active {
+        border: 2px solid #333;
+        border-bottom: 0;
+        background-color: #c2c2c2;   
+    }
+
+.tab__section {
+    margin-top: -2px;
+    padding: 1em;
+    border: 2px solid #333;
+    background-color: #c2c2c2;
+
+    @include clearfix;
+
+    @include breakpoint(small) {
+        margin-bottom: 1em;
+    }
+
+}
+
+
+
+
 /*------------------------------------*\
     $Site Header
 \*------------------------------------*/
 .header {
+    position: relative;
     background-color: #e1e1e1;
 }
 
@@ -552,7 +607,7 @@ textarea {
     float: left;
     margin-right: 1em;
 
-    > img {
+    img {
         display: block;
     }
 }
@@ -568,6 +623,10 @@ textarea {
 
     @include breakpoint(small) {
         display: none;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
     }
 
 }
@@ -578,6 +637,11 @@ textarea {
     color: #fff;
     text-decoration: none;
     background-color: #333;
+
+    @include breakpoint(small) {
+        width: 100%;
+    }
+
 }
 
 .toggle-menu {
@@ -621,11 +685,11 @@ textarea {
 /*------------------------------------*\
     $Pods
 \*------------------------------------*/
-.pods {
+.tiles {
     background-color: #acacac;
 }
 
-.pod {
+.tile {
     padding: 1em;
 }
 
@@ -671,8 +735,6 @@ textarea {
     $VS
 \*------------------------------------*/
 .vs {
-    padding-top: 1em;
-    padding-bottom: 1em;
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: 50% 40%;
@@ -684,6 +746,34 @@ textarea {
     text-align: center;
 }
 
+
+
+
+
+/*------------------------------------*\
+    $Fixtures
+\*------------------------------------*/
+.fixture { 
+    margin-bottom: 0.5em;
+
+    dt {
+        width: 30%;
+        float: left;
+        clear: left;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+
+    dd {
+        float: left;
+        width: 70%;
+        padding-left: 0.5em;
+        font-size: 0.8em;
+    }
+
+    @include clearfix;
+
+}
 
 
 
@@ -717,10 +807,7 @@ textarea {
     background-color: #7d7d7d;
 }
 
-.players {
-    width: 100%;
-    overflow: hidden;
-}
+.players {}
 
 .player {
     height: 250px;
